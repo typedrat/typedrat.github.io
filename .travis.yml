@@ -8,7 +8,7 @@ install:
 - cabal new-build --only-dependencies
 script:
 - cabal new-build
-- ./dist-newstyle/build/x86_64-linux/ghc-8.4.3/typedrat-hakyll-0.1.0.0/x/site/build/site/site build
+- ./dist-newstyle/build/x86_64-linux/ghc-8.4.3/typedrat-hakyll-0.1.0.0/c/site/build/site/site build
 deploy:
   provider: pages
   skip-cleanup: true
