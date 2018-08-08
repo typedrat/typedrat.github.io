@@ -1,1 +1,0 @@
-# typedrat.github.io
