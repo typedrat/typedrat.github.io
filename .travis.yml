@@ -1,0 +1,32 @@
+language: haskell
+dist: trusty
+sudo: false
+ghc:
+- '8.4'
+install:
+- cabal update
+- cabal new-build --only-dependencies
+script:
+- cabal new-run site -- build
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true 
+  local-dir: _site
+  github-token:
+    secure: 6p6RK3D24Cj/cj0d7dFYfKRcEV1va/YidRkhCYyzQJBostWBVsHMPU6E/ojT7bYnDffEHP6SngCPkLDS0uyvqdPYOrQH5WNuwsqjoWdm8mLtYhpFLb2fZyzLIUEMQLfKWKwfzPq8Y6dTTVD8D08MsxrNcwUV/nj/21Yf7IgV5zsBmcnoJAfg2FnEaRauiUv1mnBxRFvSRO8i/aPQy5ecrKVX7twG6tFs7fswtMX3r1wa8/s3Og/GFYaUpy6neInRagesOV4KovEhHTqk88vtYR9EoSMBr1IIDj7eqHOtG2cPjZAIaZPEfCA8Odr40QPoiViVtkCrUzshH2WSNo31cypUeGDpy3RxUtUf1xLvVTeuwa/IEu26dwVrYZA4hUnkKAE/8qhJx1nF+PO/YByZyi8CjM+S/kEEkEfqy+0eWQD+hPSSvvJaZjzNuTM8trJryNsZ61gcOHJHCTE2DJVLvYMUP35poAqtvTzC7ROw5VMAMygUzJxBWERsTMIZfHIBwjDr48pRQW52km/xI/mm/k/773OslD2ANJ7LuR7k2oU55LAYvvILBn0MEP/gY2o6L4YpOcu7CuwYnxlNo1Oxkb68CcInwKCRoqFZ+fwpkdXiNliL7glFvmeKF2I1O1ZpMAAlImcLCOH8aqmUZN688NLXZuq5Z9MvDFWL2nhQQXA=
+  on:
+    branch: source
+  target-branch: master
+  fqdn: typedr.at
+cache:
+  directories:
+  - "$HOME/.cabal/packages"
+  - "$HOME/.cabal/store"
+  - "$HOME/.cabal/bin"
+before_cache:
+- rm -fv $HOME/.cabal/packages/hackage.haskell.org/build-reports.log
+- rm -fv $HOME/.cabal/packages/hackage.haskell.org/00-index*
+- rm -fv $HOME/.cabal/packages/hackage.haskell.org/01-index*
+- rm -fv $HOME/.cabal/packages/hackage.haskell.org/*.json
+- rm -rfv $HOME/.cabal/packages/hackage.haskell.org/hackage-security-lock
