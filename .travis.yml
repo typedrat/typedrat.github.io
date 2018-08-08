@@ -2,12 +2,12 @@ language: haskell
 dist: trusty
 sudo: false
 ghc:
-- '8.4'
+- '8.4.3'
 install:
 - cabal update
 - cabal new-build --only-dependencies
 script:
-- cabal new-run site -- build
+- ./dist-newstyle/build/x86_64-linux/ghc-8.4.3/typedrat-hakyll-0.1.0.0/x/site/build/site/site build
 deploy:
   provider: pages
   skip-cleanup: true
