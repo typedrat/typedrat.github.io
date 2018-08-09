@@ -1,32 +1,40 @@
-language: haskell
 dist: trusty
 sudo: false
+
+language: haskell
 ghc:
 - '8.4.3'
+
 install:
 - cabal update
 - cabal new-build --only-dependencies
+
 script:
 - cabal new-build
 - ./dist-newstyle/build/x86_64-linux/ghc-8.4.3/typedrat-hakyll-0.1.0.0/c/site/build/site/site build
+
 deploy:
   provider: pages
-  skip-cleanup: true
-  keep-history: true 
-  local-dir: _site
+  fqdn: typedr.at
   github-token: $GITHUB_SECRET
+  local-dir: _site
+
+  skip-cleanup: true
+  keep-history: true
+
+  target-branch: master
   on:
     branch: source
-  target-branch: master
-  fqdn: typedr.at
-cache:
-  directories:
-  - "$HOME/.cabal/packages"
-  - "$HOME/.cabal/store"
-  - "$HOME/.cabal/bin"
+
 before_cache:
 - rm -fv $HOME/.cabal/packages/hackage.haskell.org/build-reports.log
 - rm -fv $HOME/.cabal/packages/hackage.haskell.org/00-index*
 - rm -fv $HOME/.cabal/packages/hackage.haskell.org/01-index*
 - rm -fv $HOME/.cabal/packages/hackage.haskell.org/*.json
 - rm -rfv $HOME/.cabal/packages/hackage.haskell.org/hackage-security-lock
+
+cache:
+  directories:
+  - "$HOME/.cabal/packages"
+  - "$HOME/.cabal/store"
+  - "$HOME/.cabal/bin"
