@@ -1,0 +1,28 @@
+.contact 
+{
+    list-style: none;
+    padding: none;
+}
+
+.contact li 
+{
+    align-self: center;
+}
+
+.contact svg
+{
+    height: 1em;
+    width: 1em;
+    top: .125em;
+    position: relative;
+}
+
+.light .contact svg
+{
+    fill: var(--light-fg);
+}
+
+.dark .contact svg
+{
+    fill: var(--dark-fg);
+}
