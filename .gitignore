@@ -29,3 +29,4 @@ cabal.project.local~
 
 _site/
 _cache/
+.DS_Store
