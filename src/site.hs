@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.List (isSuffixOf)
-import           Data.Monoid (mappend)
+import           Data.Monoid (mappend, (<>))
 import           Hakyll
 import qualified Text.Pandoc as P
 import           Typedrat.Hakyll.MinifyCss
