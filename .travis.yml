@@ -1,9 +1,21 @@
 dist: trusty
 sudo: false
 
-language: haskell
-ghc:
-- '8.4.3'
+language: c
+
+addons:
+  apt:
+    sources:
+    - hvr-ghc
+    packages:
+    - ghc-8.2.1
+    - cabal-install-head
+
+before_install:
+- export PATH=/opt/ghc/$GHCVER/bin:$PATH
+- export PATH=/opt/cabal/head/bin:$PATH
+- ghc --version
+- cabal --version
 
 install:
 - cabal update
@@ -11,7 +23,7 @@ install:
 
 script:
 - cabal new-build
-- ./dist-newstyle/build/x86_64-linux/ghc-8.4.3/typedrat-hakyll-0.1.0.0/c/site/build/site/site build
+- ./dist-newstyle/build/x86_64-linux/ghc-8.2.1/typedrat-hakyll-0.1.0.0/c/site/build/site/site build
 
 deploy:
   provider: pages
@@ -38,3 +50,4 @@ cache:
   - "$HOME/.cabal/packages"
   - "$HOME/.cabal/store"
   - "$HOME/.cabal/bin"
+  - dist-newstyle
