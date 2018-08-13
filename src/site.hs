@@ -18,7 +18,7 @@ main = hakyll $ do
         match "static/fonts/**" $ do
             route idRoute
             compile copyFileCompiler
-        match "static/img/*" $ do
+        match "static/img/**" $ do
             route idRoute
             compile copyFileCompiler
         match "static/js/*" $ compile getResourceBody
