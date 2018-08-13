@@ -16,13 +16,11 @@ While the command existed before, it only worked to install executable from repo
 
 However, due to concerns about the somewhat surprising behavior of the only method GHC provides to enable library installation while avoiding the pitfalls of "Cabal hell" (the first time it is used, it hides all non-bundled-with-GHC, non-installed-through-that-method libraries that are currently in the ambient package environment), library installation is hidden behind the `--lib` flag.
 
-**(gif goes here)**
-
 ## `cabal new-repl` now works outside of projects, including support for including Hackage libraries.
 
 One often-requested feature that Cabal hasn't provided to date is a way to play around with a library in the REPL with a single command. Now, `new-repl` supports a new flag, `--build-depends`, that allows users to specify dependencies to get pulled in and made available to the REPL session as they would if they were a dependency of a local package. This works both inside a project, to add another library to that environment, and outside of one, to explore or do simple work with a library that doesn't require a full project.
 
-**(gif goes here)**
+![new-repl in use.](/static/img/posts/what-i-did-on-my-summer-vacation/new-repl-demo.gif)
 
 ## `cabal new-run` for scripts and `cabal` as a script interpreter
 
@@ -30,9 +28,10 @@ Cabal is now able to handle dependencies for Haskell based scripts, using a synt
 
 ```haskell
 #!/usr/bin/env cabal
+{-# LANGUAGE OverloadedStrings #-}
 {- cabal:
-build-depends: base, text, shelly ^>= 1.8.1
-default-extensions: OverloadedStrings
+build-depends: base, text ^>= 1.2.3, shelly ^>= 1.8.1
+with-compiler: ghc-8.4.3
 -}
 
 import Shelly
@@ -44,13 +43,9 @@ main = shelly $ mapM_ (liftIO . T.putStrLn) =<< lsT "."
 
 While this is obviously just a very, very unnecessary replacement for `ls -1a`, it does demonstrate how scripts that require libraries can now be run with no preparation, providing an even nicer scripting experience than a lot of popular scripting languages. 
 
-**(gif goes here)**
-
 ## `cabal new-clean` and `cabal new-sdist`
 
 Neither of these are *exciting* commands. I don't think anyone has ever been jumping for joy because they got to run `cabal clean`. But they're exactly the sort of useful and important basic functionality that is needed to take something from a promising tech preview to a finished project.
-
-**(gif goes here)**
 
 ## Legacy aliases
 

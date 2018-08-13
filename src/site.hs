@@ -36,10 +36,7 @@ main = hakyll $ do
 
         match "posts/*" $ do
             let 
-                markdownOpts = P.def
-                    { P.readerExtensions = P.enableExtension P.Ext_literate_haskell P.pandocExtensions
-                    }
-                htmlOptions = P.def
+                writerOptions = P.def
                     { P.writerHTMLMathMethod = P.MathJax ""
                     , P.writerHighlightStyle = Nothing
                     }
@@ -48,7 +45,7 @@ main = hakyll $ do
                 case lookupString "slug" meta of
                     Just slug -> constRoute ("posts/" ++ slug ++ "/index.html")
                     Nothing -> error "Can't render post without slug."
-            compile $ pandocCompilerWith markdownOpts htmlOptions
+            compile $ pandocCompilerWith P.def writerOptions
                 >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
