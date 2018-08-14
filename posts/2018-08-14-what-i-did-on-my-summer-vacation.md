@@ -25,20 +25,20 @@ One often-requested feature that Cabal hasn't provided to date is a way to play 
 
 Cabal is now able to handle dependencies for Haskell based scripts, using a syntax based on the executable stanza from a standard Cabal file.
 
-```
-#!/usr/bin/env cabal
-{-# LANGUAGE OverloadedStrings #-}
-{- cabal:
-build-depends: base, text ^>= 1.2.3, shelly ^>= 1.8.1
-with-compiler: ghc-8.4.3
--}
 
-import Shelly
-import qualified Data.Text.IO as T
+    #!/usr/bin/env cabal
+    {-# LANGUAGE OverloadedStrings #-}
+    {- cabal:
+    build-depends: base, text ^>= 1.2.3, shelly ^>= 1.8.1
+    with-compiler: ghc-8.4.3
+    -}
 
-main :: IO ()
-main = shelly $ mapM_ (liftIO . T.putStrLn) =<< lsT "."
-```
+    import Shelly
+    import qualified Data.Text.IO as T
+
+    main :: IO ()
+    main = shelly $ mapM_ (liftIO . T.putStrLn) =<< lsT "."
+
 
 While this is obviously just a very, very unnecessary replacement for `ls -1a`, it does demonstrate how scripts that require libraries can now be run with no preparation, providing an even nicer scripting experience than a lot of popular scripting languages. 
 
@@ -50,6 +50,13 @@ Neither of these are *exciting* commands. I don't think anyone has ever been jum
 
 Giving commands names that start with `new` is perhaps not an evergreen decision. Likewise, once `new-build` becomes `build`, to quote my proposal's title, there must be a way to reference the existing behavior. There are now `v1-` aliases for all old-style commands that will be replaced or removed from the new-style user interface, and `v2-` aliases for long-term scripts that will ensure that the scripts continue to function from when cabal-install 2.4 comes out, past when the defaults change, past when the `new-` prefixed versions of those are removed, until the eventual complete removal when a third interface paradigm is devised.
 
+
+Pre-2.4           | Post-2.4         | Future                         
+------------------|------------------|--------------------------------
+`cabal build`     | `cabal v1-build` | Removed in a TBD future release 
+`cabal new-build` | `cabal v2-build` | `cabal build` in 3.0            
+
+
 ## Bug fixes ahoy
 
 I'm just going to list these:
@@ -58,6 +65,12 @@ I'm just going to list these:
 - [Haddock failures are no longer treated as fatal errors incorrectly.](https://github.com/haskell/cabal/issues/5459)
 - [Commands no longer fail due to selectors that are unambiguous in context but also refer to targets that don't make sense for the command being used.](https://github.com/haskell/cabal/issues/5461)
 - [`new-repl` works correctly outside of projects](https://github.com/haskell/cabal/issues/5425)
+
+## Still to be done:
+
+I'm not done working on Cabal, and I have more plans:
+- Several bug fixes are still in the wings in my [project page](https://github.com/haskell/cabal/projects/6).
+- [VCS URLs](https://github.com/haskell/cabal/issues/5522) are a convenience feature that will help a major feature that I didn't write but did work to help land, remote target support, gain higher adoption than with the verbose but complete syntax currently on offer.
 
 # What I learned from the experience
 

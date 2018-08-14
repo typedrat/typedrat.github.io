@@ -35,17 +35,11 @@ main = hakyll $ do
             compile $ minifyCssCompiler "static/css/*"
 
         match "posts/*" $ do
-            let 
-                writerOptions = P.def
-                    { P.writerHTMLMathMethod = P.MathJax ""
-                    , P.writerHighlightStyle = Nothing
-                    }
-
             route . metadataRoute $ \meta ->
                 case lookupString "slug" meta of
                     Just slug -> constRoute ("posts/" ++ slug ++ "/index.html")
                     Nothing -> error "Can't render post without slug."
-            compile $ pandocCompilerWith P.def writerOptions
+            compile $ pandocCompiler
                 >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
