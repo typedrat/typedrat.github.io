@@ -3,8 +3,6 @@ title: "What I did on my summer vacation..."
 slug: what-i-did-on-my-summer-vacation
 ---
 
-# What I did
-
 This year, I took part in Google Summer of Code, with a project to attempt to finish bringing Cabal's Nix-style local builds (the `new-` commands, at least for now) up to parity with the old stateful methodology of using `cabal-install`.
 
 While I'm not sure that it covers every single use for legacy cabal out there, I did manage to bring in some exciting new-to-Cabal features on top of a whole heap of bug fixes and TODOs now done.
@@ -69,6 +67,7 @@ I'm just going to list these:
 ## Still to be done:
 
 I'm not done working on Cabal, and I have more plans:
+
 - Several bug fixes are still in the wings in my [project page](https://github.com/haskell/cabal/projects/6).
 - [VCS URLs](https://github.com/haskell/cabal/issues/5522) are a convenience feature that will help a major feature that I didn't write but did work to help land, remote target support, gain higher adoption than with the verbose but complete syntax currently on offer.
 
