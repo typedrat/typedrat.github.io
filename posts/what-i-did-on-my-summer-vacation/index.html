@@ -53,8 +53,7 @@
     <p class="post-dateline">August 14, 2018</p>
 
     <article>
-        <h1 id="what-i-did">What I did</h1>
-<p>This year, I took part in Google Summer of Code, with a project to attempt to finish bringing Cabal’s Nix-style local builds (the <code>new-</code> commands, at least for now) up to parity with the old stateful methodology of using <code>cabal-install</code>.</p>
+        <p>This year, I took part in Google Summer of Code, with a project to attempt to finish bringing Cabal’s Nix-style local builds (the <code>new-</code> commands, at least for now) up to parity with the old stateful methodology of using <code>cabal-install</code>.</p>
 <p>While I’m not sure that it covers every single use for legacy cabal out there, I did manage to bring in some exciting new-to-Cabal features on top of a whole heap of bug fixes and TODOs now done.</p>
 <h2 id="cabal-new-install-is-done."><code>cabal new-install</code> is done.</h2>
 <p>While the command existed before, it only worked to install executable from repository packages. I added support for the installation of local components and for the installation of libraries.</p>
@@ -113,7 +112,11 @@ main = shelly $ mapM_ (liftIO . T.putStrLn) =&lt;&lt; lsT &quot;.&quot;</code></
 <li><a href="https://github.com/haskell/cabal/issues/5425"><code>new-repl</code> works correctly outside of projects</a></li>
 </ul>
 <h2 id="still-to-be-done">Still to be done:</h2>
-<p>I’m not done working on Cabal, and I have more plans: - Several bug fixes are still in the wings in my <a href="https://github.com/haskell/cabal/projects/6">project page</a>. - <a href="https://github.com/haskell/cabal/issues/5522">VCS URLs</a> are a convenience feature that will help a major feature that I didn’t write but did work to help land, remote target support, gain higher adoption than with the verbose but complete syntax currently on offer.</p>
+<p>I’m not done working on Cabal, and I have more plans:</p>
+<ul>
+<li>Several bug fixes are still in the wings in my <a href="https://github.com/haskell/cabal/projects/6">project page</a>.</li>
+<li><a href="https://github.com/haskell/cabal/issues/5522">VCS URLs</a> are a convenience feature that will help a major feature that I didn’t write but did work to help land, remote target support, gain higher adoption than with the verbose but complete syntax currently on offer.</li>
+</ul>
 <h1 id="what-i-learned-from-the-experience">What I learned from the experience</h1>
 <p>The biggest lesson I learned was a very practical lesson in the difference between knowledge and experience.</p>
 <p>While I might be a fairly <em>knowledgeable</em> Haskell developer, I’d never worked on a Haskell project with other developers and my experience with non-personal projects was pretty fleeting in general. It provided my first experience with code review, and I struggled a lot with scheduling and focus in the beginning, but I grew rather more productive as the project drug on.</p>
