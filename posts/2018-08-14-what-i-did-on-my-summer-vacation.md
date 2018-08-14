@@ -1,7 +1,6 @@
 ---
 title: "What I did on my summer vacation..."
 slug: what-i-did-on-my-summer-vacation
-hidden: True
 ---
 
 # What I did
@@ -10,7 +9,7 @@ This year, I took part in Google Summer of Code, with a project to attempt to fi
 
 While I'm not sure that it covers every single use for legacy cabal out there, I did manage to bring in some exciting new-to-Cabal features on top of a whole heap of bug fixes and TODOs now done.
 
-## [`cabal new-install` is done.]
+## `cabal new-install` is done.
 	
 While the command existed before, it only worked to install executable from repository packages. I added support for the installation of local components and for the installation of libraries.
 
@@ -26,7 +25,7 @@ One often-requested feature that Cabal hasn't provided to date is a way to play 
 
 Cabal is now able to handle dependencies for Haskell based scripts, using a syntax based on the executable stanza from a standard Cabal file.
 
-```haskell
+```
 #!/usr/bin/env cabal
 {-# LANGUAGE OverloadedStrings #-}
 {- cabal:
