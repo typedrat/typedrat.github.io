@@ -62,6 +62,14 @@ main = hakyll $ do
                     >>= relativizeUrls
                     >>= cleanIndexUrls
 
+        create ["atom.xml"] $ do
+            route idRoute
+            compile $ do
+                let feedCtx = postCtx `mappend` bodyField "description"
+                posts <- filterM hideHidden =<< recentFirst =<< loadAllSnapshots "posts/*.md" "content"
+                renderAtom myFeedConfiguration feedCtx posts
+
+
         create ["index.html"] $ do
             route idRoute
             compile $ do
@@ -99,6 +107,16 @@ postCtx =
             case lookupString "slug" meta of
                 Just slug -> return ("cat " ++ slug ++ ".md")
                 Nothing -> fail "Can't render post without slug."
+
+myFeedConfiguration :: FeedConfiguration
+myFeedConfiguration = FeedConfiguration
+    { feedTitle       = "typedr.at"
+    , feedDescription = "Alexis Williams' writings about Haskell, software, and (occasionally) other topics."
+    , feedAuthorName  = "Alexis Williams"
+    , feedAuthorEmail = "alexis@typedr.at"
+    , feedRoot        = "https://typedr.at"
+    }
+
 
 cleanIndexUrls :: Item String -> Compiler (Item String)
 cleanIndexUrls = return . fmap (withUrls cleanIndex)
