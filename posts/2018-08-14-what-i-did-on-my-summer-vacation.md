@@ -7,19 +7,19 @@ This year, I took part in Google Summer of Code, with a project to attempt to fi
 
 While I'm not sure that it covers every single use for legacy cabal out there, I did manage to bring in some exciting new-to-Cabal features on top of a whole heap of bug fixes and TODOs now done.
 
-## `cabal new-install` is done.
+## [`cabal new-install` is done.](https://github.com/haskell/cabal/issues/5399)
 	
 While the command existed before, it only worked to install executable from repository packages. I added support for the installation of local components and for the installation of libraries.
 
 However, due to concerns about the somewhat surprising behavior of the only method GHC provides to enable library installation while avoiding the pitfalls of "Cabal hell" (the first time it is used, it hides all non-bundled-with-GHC, non-installed-through-that-method libraries that are currently in the ambient package environment), library installation is hidden behind the `--lib` flag.
 
-## `cabal new-repl` now works outside of projects, including support for including Hackage libraries.
+## [`cabal new-repl` now works outside of projects, including support for including Hackage libraries.](https://github.com/haskell/cabal/issues/5454)
 
 One often-requested feature that Cabal hasn't provided to date is a way to play around with a library in the REPL with a single command. Now, `new-repl` supports a new flag, `--build-depends`, that allows users to specify dependencies to get pulled in and made available to the REPL session as they would if they were a dependency of a local package. This works both inside a project, to add another library to that environment, and outside of one, to explore or do simple work with a library that doesn't require a full project.
 
 ![new-repl in use.](/static/img/posts/what-i-did-on-my-summer-vacation/new-repl-demo.gif)
 
-## `cabal new-run` for scripts and `cabal` as a script interpreter
+## [`cabal new-run` for scripts and `cabal` as a script interpreter](https://github.com/haskell/cabal/issues/5483)
 
 Cabal is now able to handle dependencies for Haskell based scripts, using a syntax based on the executable stanza from a standard Cabal file.
 
@@ -40,11 +40,11 @@ Cabal is now able to handle dependencies for Haskell based scripts, using a synt
 
 While this is obviously just a very, very unnecessary replacement for `ls -1a`, it does demonstrate how scripts that require libraries can now be run with no preparation, providing an even nicer scripting experience than a lot of popular scripting languages. 
 
-## `cabal new-clean` and `cabal new-sdist`
+## [`cabal new-clean`](https://github.com/haskell/cabal/issues/5357) and [`cabal new-sdist`](https://github.com/haskell/cabal/issues/5389)
 
 Neither of these are *exciting* commands. I don't think anyone has ever been jumping for joy because they got to run `cabal clean`. But they're exactly the sort of useful and important basic functionality that is needed to take something from a promising tech preview to a finished project.
 
-## Legacy aliases
+## [Legacy aliases](https://github.com/haskell/cabal/issues/5358)
 
 Giving commands names that start with `new` is perhaps not an evergreen decision. Likewise, once `new-build` becomes `build`, to quote my proposal's title, there must be a way to reference the existing behavior. There are now `v1-` aliases for all old-style commands that will be replaced or removed from the new-style user interface, and `v2-` aliases for long-term scripts that will ensure that the scripts continue to function from when cabal-install 2.4 comes out, past when the defaults change, past when the `new-` prefixed versions of those are removed, until the eventual complete removal when a third interface paradigm is devised.
 
