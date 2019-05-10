@@ -1,19 +1,12 @@
-dist: trusty
+dist: xenial
 sudo: false
 
-language: c
+language: haskell
 
-addons:
-  apt:
-    sources:
-    - hvr-ghc
-    packages:
-    - ghc-8.2.1
-    - cabal-install-head
+ghc:
+- "8.6"
 
 before_install:
-- export PATH=/opt/ghc/$GHCVER/bin:$PATH
-- export PATH=/opt/cabal/head/bin:$PATH
 - ghc --version
 - cabal --version
 
