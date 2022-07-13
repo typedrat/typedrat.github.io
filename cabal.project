@@ -1,6 +1,0 @@
-packages: typedrat-hakyll.cabal
-
-source-repository-package
-    type: git
-    location: https://github.com/erikd/language-javascript.git
-    tag: new-ast

@@ -1,8 +1,10 @@
-<article class="post">
-    <a href="$url$"><h1>$title$</h1></a>
-    <p class="post-dateline">$date$</p>
+{% extends "index.html" %}
 
-    <article>
-        $body$
-    </article>
-</article>
+{% block content %}
+<h2>
+    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+</h2>
+<p class="muted"><small>Published: {{ page.date }}</small></p>
+
+{{ page.content | safe }}
+{% endblock content %}

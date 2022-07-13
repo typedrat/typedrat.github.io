@@ -1,15 +1,127 @@
-<section class="post-list">
-    $for(posts)$
-        <article class="post">
-            <a href="$url$"><h1>$title$</h1></a>
-            <p class="post-dateline">$date$</p>
+<!DOCTYPE html>
+<html>
 
-            <section>
-                $body$            
-            </section>
+<head>
+    <link href="/favicon/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
+    <link href="/favicon/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+    <link href="/favicon/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+    <link href="/favicon/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+    <link href="/favicon/apple-touch-icon-120x120.png" rel="apple-touch-icon-precomposed" sizes="120x120">
+    <link href="/favicon/apple-touch-icon-152x152.png" rel="apple-touch-icon-precomposed" sizes="152x152">
+    <link href="/favicon/favicon-32x32.png" type="image/png" rel="icon" sizes="32x32">
+    <link href="/favicon/favicon-16x16.png" type="image/png" rel="icon" sizes="16x16">
+    <meta content="typedr.at" name="application-name">
+    <meta content="#FBFBFB" name="msapplication-TileColor">
+    <meta content="/favicon/mstile-144x144.png" name="msapplication-TileImage">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <link rel="stylesheet" href="/global.css" />
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="/">typedr.at</a></li>
+            </ul>
+            <ul class="social-media-links">
+                <li>
+                    <a href="https://linkedin.com/in/typedrat" target="_blank">
+                        <ion-icon name="logo-linkedin" />
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/typedrat" target="_blank">
+                        <ion-icon name="logo-octocat" />
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/typedrat" target="_blank">
+                        <ion-icon name="logo-twitter" />
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        <div class="grid about-me">
+            {% set headshot_image = resize_image(path="alexis.png", width=300, height=300) %}
+            <div class="headshot-container">
+                <img src="{{ headshot_image.url }}" alt="A picture of Alexis Williams." width="300" height="300">
+            </div>
+            <div>
+                <h2>Alexis Williams</h2>
+                <p>
+                    Haskell aficionado, type enthusiast, lover of math, programming sell-sword.
+                </p>
+            </div>
+        </div>
+
+        <h2>Recent Articles</h2>
+
+        {% for page in paginator.pages | sort(attribute="date") | reverse %}
+        <article>
+            <h3>
+                <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+            </h3>
+            <p class="muted"><small>Published: {{ page.date }}</small></p>
+
+            {% if page.summary %}
+            {{ page.summary | safe }}
+
+            <p>
+                <a href="{{ page.permalink | safe }}">Read more...</a>
+            </p>
+            {% else %}
+            {{ page.content | safe }}
+            {% endif %}
         </article>
-    $endfor$
+        {% endfor %}
 
-    <a class="archive-link" href="/posts"><h3>More...</h3></a>
-</section>
-    
+        <nav>
+            <p>
+                {% if paginator.previous %}
+                <ul>
+                    <li><a href="{{ paginator.previous }}">&laquo; Previous</a></li>
+                </ul>
+                {% endif %}
+                <ul>
+                    <li>Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</li>
+                </ul>
+                {% if paginator.next %}
+                <ul>
+                    <li><a href="{{ paginator.next }}">Next &raquo;</a></li>
+                </ul>
+                {% endif %}
+            </p>
+        </nav>
+        {% endblock content %}
+    </main>
+
+    <footer class="container">
+        <p>
+            © 2017-2022 Alexis Williams.
+        </p>
+
+        <p>
+            This site is made with the amazing <a href="https://www.getzola.org/" target="_blank">Zola</a> static site
+            generator.
+        </p>
+
+        <p>
+            The content of this site is under the terms of the
+            <a href="https://choosealicense.com/licenses/mit/">MIT License</a>, except for code excerpts from existing
+            projects, which maintain the same licensing as the original project from which they were extracted.
+        </p>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
