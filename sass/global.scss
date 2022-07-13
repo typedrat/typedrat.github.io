@@ -36,6 +36,15 @@ samp {
     --font-family: "Victor Mono", monospace;
 }
 
+a code, [role="link"] code {
+    color: var(--primary);
+}
+
+a:is([aria-current], :hover, :active, :focus) code, [role="link"]:is([aria-current], :hover, :active, :focus) code {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
 /* Pink Light scheme (Default) */
 /* Can be forced with data-theme="light" */
 [data-theme="light"],
