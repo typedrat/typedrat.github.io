@@ -70,15 +70,18 @@
             </h3>
             <p class="muted"><small>Published: {{ page.date }}</small></p>
 
-            {% if page.summary %}
-            {{ page.summary | safe }}
+            <div class="post-body">
 
-            <p>
-                <a href="{{ page.permalink | safe }}">Read more...</a>
-            </p>
-            {% else %}
-            {{ page.content | safe }}
-            {% endif %}
+                {% if page.summary %}
+                {{ page.summary | safe }}
+    
+                <p>
+                    <a href="{{ page.permalink | safe }}">Read more...</a>
+                </p>
+                {% else %}
+                {{ page.content | safe }}
+                {% endif %}
+            </div>
         </article>
         {% endfor %}
 

@@ -1,10 +1,13 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2>
-    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-</h2>
-<p class="muted"><small>Published: {{ page.date }}</small></p>
+<div class="post-body">
 
-{{ page.content | safe }}
+    <h2>
+        <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+    </h2>
+    <p class="muted"><small>Published: {{ page.date }}</small></p>
+    
+    {{ page.content | safe }}
+</div>
 {% endblock content %}
