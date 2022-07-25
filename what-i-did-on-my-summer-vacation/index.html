@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="/favicon/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
+    <link href="/favicon/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+    <link href="/favicon/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+    <link href="/favicon/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+    <link href="/favicon/apple-touch-icon-120x120.png" rel="apple-touch-icon-precomposed" sizes="120x120">
+    <link href="/favicon/apple-touch-icon-152x152.png" rel="apple-touch-icon-precomposed" sizes="152x152">
+    <link href="/favicon/favicon-32x32.png" type="image/png" rel="icon" sizes="32x32">
+    <link href="/favicon/favicon-16x16.png" type="image/png" rel="icon" sizes="16x16">
+    <meta content="typedr.at" name="application-name">
+    <meta content="#FBFBFB" name="msapplication-TileColor">
+    <meta content="/favicon/mstile-144x144.png" name="msapplication-TileImage">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/global.css" />
+    <title>typedr.at</title>
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="/">typedr.at</a></li>
+            </ul>
+            <ul class="social-media-links">
+                <li>
+                    <a href="https://linkedin.com/in/typedrat" target="_blank">
+                        <ion-icon name="logo-linkedin" />
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/typedrat" target="_blank">
+                        <ion-icon name="logo-octocat" />
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/typedrat" target="_blank">
+                        <ion-icon name="logo-twitter" />
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<div class="post-body">
+
+    <h2>
+        <a href="https://typedr.at/what-i-did-on-my-summer-vacation/">What I did on my summer vacation...</a>
+    </h2>
+    <p class="muted"><small>Published: 2018-08-14</small></p>
+    
+    <p>This year, I took part in Google Summer of Code, with a project to attempt to finish bringing Cabal's Nix-style local builds (the <code>new-</code> commands, at least for now) up to parity with the old stateful methodology of using <code>cabal-install</code>.</p>
+<p>While I'm not sure that it covers every single use for legacy cabal out there, I did manage to bring in some exciting new-to-Cabal features on top of a whole heap of bug fixes and TODOs now done.</p>
+<span id="continue-reading"></span><h2 id="cabal-new-install-is-done"><a href="https://github.com/haskell/cabal/issues/5399"><code>cabal new-install</code> is done.</a></h2>
+<p>While the command existed before, it only worked to install executable from repository packages. I added support for the installation of local components and for the installation of libraries.</p>
+<p>However, due to concerns about the somewhat surprising behavior of the only method GHC provides to enable library installation while avoiding the pitfalls of &quot;Cabal hell&quot; (the first time it is used, it hides all non-bundled-with-GHC, non-installed-through-that-method libraries that are currently in the ambient package environment), library installation is hidden behind the <code>--lib</code> flag.</p>
+<h2 id="cabal-new-repl-now-works-outside-of-projects-including-support-for-including-hackage-libraries"><a href="https://github.com/haskell/cabal/issues/5454"><code>cabal new-repl</code> now works outside of projects, including support for including Hackage libraries.</a></h2>
+<p>One often-requested feature that Cabal hasn't provided to date is a way to play around with a library in the REPL with a single command. Now, <code>new-repl</code> supports a new flag, <code>--build-depends</code>, that allows users to specify dependencies to get pulled in and made available to the REPL session as they would if they were a dependency of a local package. This works both inside a project, to add another library to that environment, and outside of one, to explore or do simple work with a library that doesn't require a full project.</p>
+<p><img src="https://typedr.at/what-i-did-on-my-summer-vacation/new-repl-demo.gif" alt="new-repl in use." /></p>
+<h2 id="cabal-new-run-for-scripts-and-cabal-as-a-script-interpreter"><a href="https://github.com/haskell/cabal/issues/5483"><code>cabal new-run</code> for scripts and <code>cabal</code> as a script interpreter</a></h2>
+<p>Cabal is now able to handle dependencies for Haskell based scripts, using a syntax based on the executable stanza from a standard Cabal file.</p>
+<pre class="z-code"><code><span class="z-text z-plain">#!/usr/bin/env cabal
+{-# LANGUAGE OverloadedStrings #-}
+{- cabal:
+build-depends: base, text ^&gt;= 1.2.3, shelly ^&gt;= 1.8.1
+with-compiler: ghc-8.4.3
+-}
+
+import Shelly
+import qualified Data.Text.IO as T
+
+main :: IO ()
+main = shelly $ mapM_ (liftIO . T.putStrLn) =&lt;&lt; lsT &quot;.&quot;
+</span></code></pre>
+<p>While this is obviously just a very, very unnecessary replacement for <code>ls -1a</code>, it does demonstrate how scripts that require libraries can now be run with no preparation, providing an even nicer scripting experience than a lot of popular scripting languages. </p>
+<h2 id="cabal-new-clean-and-cabal-new-sdist"><a href="https://github.com/haskell/cabal/issues/5357"><code>cabal new-clean</code></a> and <a href="https://github.com/haskell/cabal/issues/5389"><code>cabal new-sdist</code></a></h2>
+<p>Neither of these are <em>exciting</em> commands. I don't think anyone has ever been jumping for joy because they got to run <code>cabal clean</code>. But they're exactly the sort of useful and important basic functionality that is needed to take something from a promising tech preview to a finished project.</p>
+<h2 id="legacy-aliases"><a href="https://github.com/haskell/cabal/issues/5358">Legacy aliases</a></h2>
+<p>Giving commands names that start with <code>new</code> is perhaps not an evergreen decision. Likewise, once <code>new-build</code> becomes <code>build</code>, to quote my proposal's title, there must be a way to reference the existing behavior. There are now <code>v1-</code> aliases for all old-style commands that will be replaced or removed from the new-style user interface, and <code>v2-</code> aliases for long-term scripts that will ensure that the scripts continue to function from when cabal-install 2.4 comes out, past when the defaults change, past when the <code>new-</code> prefixed versions of those are removed, until the eventual complete removal when a third interface paradigm is devised.</p>
+<table><thead><tr><th>Pre-2.4</th><th>Post-2.4</th><th>Future</th></tr></thead><tbody>
+<tr><td><code>cabal build</code></td><td><code>cabal v1-build</code></td><td>Removed in a TBD future release</td></tr>
+<tr><td><code>cabal new-build</code></td><td><code>cabal v2-build</code></td><td><code>cabal build</code> in 3.0</td></tr>
+</tbody></table>
+<h2 id="bug-fixes-ahoy">Bug fixes ahoy</h2>
+<p>I'm just going to list these:</p>
+<ul>
+<li><a href="https://github.com/haskell/cabal/issues/5398"><code>new-update</code> is no longer broken outside of projects.</a></li>
+<li><a href="https://github.com/haskell/cabal/issues/5459">Haddock failures are no longer treated as fatal errors incorrectly.</a></li>
+<li><a href="https://github.com/haskell/cabal/issues/5461">Commands no longer fail due to selectors that are unambiguous in context but also refer to targets that don't make sense for the command being used.</a></li>
+<li><a href="https://github.com/haskell/cabal/issues/5425"><code>new-repl</code> works correctly outside of projects</a></li>
+</ul>
+<h2 id="still-to-be-done">Still to be done:</h2>
+<p>I'm not done working on Cabal, and I have more plans:</p>
+<ul>
+<li>Several bug fixes are still in the wings in my <a href="https://github.com/haskell/cabal/projects/6">project page</a>.</li>
+<li><a href="https://github.com/haskell/cabal/issues/5522">VCS URLs</a> are a convenience feature that will help a major feature that I didn't write but did work to help land, remote target support, gain higher adoption than with the verbose but complete syntax currently on offer.</li>
+</ul>
+<h1 id="what-i-learned-from-the-experience">What I learned from the experience</h1>
+<p>The biggest lesson I learned was a very practical lesson in the difference between knowledge and experience. </p>
+<p>While I might be a fairly <em>knowledgeable</em> Haskell developer, I'd never worked on a Haskell project with other developers and my experience with non-personal projects was pretty fleeting in general. It provided my first experience with code review, and I struggled a lot with scheduling and focus in the beginning, but I grew rather more productive as the project drug on.</p>
+<p>Google Summer of Code was an amazing experience for me, and if I am able to make the time commitment again at any point where I am still eligible for it, I will definitely be submitting a proposal again.</p>
+<p>My mentors were both incredibly helpful. I have to give special thanks to <a href="https://github.com/hvr">hvr</a>, in particular, for the amount of hands-on time he spent with me talking through issues with the code and the design this summer, and for generally being a very kind, funny person who also helped keep my morale up in the final stretch. I'd like to thank <a href="https://github.com/quasicomputational">quasicomputational</a> for the help they provided me as well.</p>
+
+</div>
+
+    </main>
+
+    <footer class="container">
+        <p>
+            © 2017-2022 Alexis Williams.
+        </p>
+
+        <p>
+            This site is made with the amazing <a href="https://www.getzola.org/" target="_blank">Zola</a> static site
+            generator.
+        </p>
+
+        <p>
+            The content of this site is under the terms of the
+            <a href="https://choosealicense.com/licenses/mit/">MIT License</a>, except for code excerpts from existing
+            projects, which maintain the same licensing as the original project from which they were extracted.
+        </p>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
